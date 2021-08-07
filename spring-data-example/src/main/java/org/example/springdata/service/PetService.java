@@ -12,4 +12,5 @@ public interface PetService {
     List<Pet> findAll();
     void deleteAll();
     Pet save(Pet pet);
+    void testTransaction(Pet pet);
 }

@@ -2,10 +2,12 @@ package org.example.springdata.domain;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Profile("mybatis")
 @Primary
 @Repository
 public class MyBatisPetRepository implements PetRepository{

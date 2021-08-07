@@ -3,14 +3,12 @@ package org.example.springdata.main;
 import org.example.springdata.config.AppConfig;
 import org.example.springdata.domain.Pet;
 import org.example.springdata.service.PetService;
-import org.example.springdata.service.PetServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDate;
-
 
 public class Main {
     public static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -35,6 +33,11 @@ public class Main {
 
         petService.save(pet1);
         petService.save(pet2);
+        try{
+            petService.testTransaction(pet2);
+        }catch (Exception e){
+            logger.error("testTransaction", e);
+        }
 
         logger.debug("list: {}", petService.findAll());
     }

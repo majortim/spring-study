@@ -26,15 +26,24 @@ public class PetServiceImpl implements PetService {
         return petRepository.findAllByName(name);
     }
 
+    @Override
     public List<Pet> findAll() {
         return petRepository.findAll();
     }
 
+    @Override
     public void deleteAll() {
         petRepository.deleteAll();
     }
 
+    @Override
     public Pet save(Pet pet) {
         return petRepository.save(pet);
+    }
+
+    @Override
+    public void testTransaction(Pet pet) {
+        petRepository.save(pet);
+        throw new RuntimeException(pet.toString());
     }
 }
