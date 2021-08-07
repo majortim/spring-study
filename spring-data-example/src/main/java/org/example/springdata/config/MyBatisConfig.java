@@ -9,7 +9,7 @@ import org.springframework.data.jdbc.repository.config.MyBatisJdbcConfiguration;
 
 import javax.sql.DataSource;
 
-//@Profile("mybatis")
+@Profile("mybatis")
 @Import(MyBatisJdbcConfiguration.class)
 @Configuration
 public class MyBatisConfig {
