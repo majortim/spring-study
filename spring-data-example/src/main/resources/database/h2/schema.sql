@@ -1,4 +1,5 @@
 CREATE TABLE pet (
+    id IDENTITY,
     name VARCHAR(20),
     owner VARCHAR(20),
     species VARCHAR(20),

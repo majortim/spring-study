@@ -27,7 +27,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Pet> findAll() {
+    public Iterable<Pet> findAll() {
         return petRepository.findAll();
     }
 
