@@ -1,6 +1,10 @@
 package org.example.webmvc.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
+import java.nio.charset.StandardCharsets;
 
 public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -17,5 +21,13 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
     @Override
     protected String[] getServletMappings() {
         return new String[] { "/" };
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding(StandardCharsets.UTF_8.toString());
+        return new Filter[] {
+                characterEncodingFilter };
     }
 }
