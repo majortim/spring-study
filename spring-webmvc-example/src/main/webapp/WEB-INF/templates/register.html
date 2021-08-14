@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+</head>
+<body>
+    <div class="container">
+        <form method="post">
+            <div>
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div>
+                <label for="owner">견주</label>
+                <input type="text" id="owner" name="owner">
+            </div>
+            <div>
+                <label for="species">견종</label>
+                <input type="text" id="species" name="species">
+            </div>
+            <br>
+            <div>
+                <label for="birth">생일</label>
+                <input type="text" id="birth" name="birth">
+            </div>
+            <div>
+                <input type="radio" id="sex_m" name="sex" value="M"
+                       checked>
+                <label for="sex_m">수컷</label>
+                <input type="radio" id="sex_f" name="sex" value="F">
+                <label for="sex_f">암컷</label>
+            </div>
+            <div>
+                <button type="submit">등록</button>
+            </div>
+        </form>
+    </div>
+
+    <script th:src="@{/static/js/axios/axios.min.js}"></script>
+</body>
+
+</html>

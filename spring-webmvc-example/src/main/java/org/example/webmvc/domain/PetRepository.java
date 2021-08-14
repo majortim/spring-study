@@ -1,12 +1,6 @@
 package org.example.webmvc.domain;
 
-import java.util.List;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface PetRepository {
-    long count();
-    List<Pet> findAllByName(String name);
-    List<Pet> findAll();
-    void deleteAll();
-    void deleteByName(String name);
-    Pet save(Pet pet);
+public interface PetRepository extends PagingAndSortingRepository<Pet, Long> {
 }

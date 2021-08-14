@@ -1,15 +1,25 @@
 package org.example.webmvc.domain;
 
-import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 
+import java.time.LocalDate;
 public class Pet {
+    @Id
+    private Long id;
     private final String name;
     private final String owner;
     private final String species;
     private final String sex;
-    private LocalDate birth;
-    private LocalDate death;
+    private final LocalDate birth;
+    private final LocalDate death;
 
+    public Pet(long id, String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
+        this(name, owner, species, sex, birth, death);
+        this.id = id;
+    }
+
+    @PersistenceConstructor
     public Pet(String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
@@ -17,6 +27,10 @@ public class Pet {
         this.sex = sex;
         this.birth = birth;
         this.death = death;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -43,11 +57,18 @@ public class Pet {
         return death;
     }
 
+
+    @Override
+    public String toString() {
+        return String.format("Pet (id = %d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
+    }
+
     public static PetBuilder builder() {
         return new PetBuilder();
     }
 
     public static class PetBuilder {
+        private Long id;
         private String name;
         private String owner;
         private String species;
@@ -56,6 +77,11 @@ public class Pet {
         private LocalDate death;
 
         private PetBuilder() {}
+
+        public PetBuilder id(long id) {
+            this.id = id;
+            return this;
+        }
 
         public PetBuilder name(String name) {
             this.name = name;
@@ -89,7 +115,7 @@ public class Pet {
 
         @Override
         public String toString() {
-            return String.format("PetBuilder(name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s", name, owner, species, sex, birth, death);
+            return String.format("PetBuilder(id =%d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
         }
 
         public Pet build() {
