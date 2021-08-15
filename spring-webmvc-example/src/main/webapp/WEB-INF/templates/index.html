@@ -1,12 +1,12 @@
 <!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" >
 
-<html lang="ko" xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
-
-<head>
+<head th:replace="~{fragments/layout :: common_head(~{::title}, ~{})}">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
+    <title>Home</title>
 </head>
-<body>
+<body th:replace="~{fragments/layout :: layout(~{::body}, 'home')}">
     <div class="container">
         <h2>Welcome</h2>
     </div>

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" >
 
-<html lang="ko" xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
-
-<head>
+<head th:replace="~{fragments/layout :: common_head(~{::title}, ~{::link})}">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
+    <title>Pet 등록</title>
+    <link rel="stylesheet" th:href="@{/resources/library/flatpickr/flatpickr.min.css}"></link>
 </head>
-<body>
+<body th:replace="~{fragments/layout :: layout(~{::body}, 'pets')}">
     <div class="container">
         <form method="post">
             <div>
@@ -39,7 +40,8 @@
         </form>
     </div>
 
-    <script th:src="@{/static/js/axios/axios.min.js}"></script>
+    <script th:src="@{/resources/library/flatpickr/flatpickr.min.js}"></script>
+    <script th:src="@{/resources/js/register.js}"></script>
 </body>
 
 </html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" >
 
-<html lang="ko" xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'pets')}">
-
-<head>
+<head th:replace="~{fragments/layout :: common_head(~{::title}, ~{})}">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
+    <title>Pet 목록</title>
 </head>
-<body>
+<body th:replace="~{fragments/layout :: layout(~{::body}, 'pets')}">
     <div class="container">
         <div>
             <a href="/register" th:href="@{/register}">등록</a>
@@ -31,7 +31,7 @@
     <script th:inline="javascript">
         const CONTEXT_PATH = [[${#request.getContextPath()}]];
     </script>
-    <script th:src="@{/resources/js/axios/axios.min.js}"></script>
+    <script th:src="@{/resources/library/axios/axios.min.js}"></script>
     <script th:src="@{/resources/js/pet.js}"></script>
 </body>
 

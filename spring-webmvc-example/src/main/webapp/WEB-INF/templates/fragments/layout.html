@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="ko" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (template, menu)">
+<html lang="ko"  xmlns:th="https://www.thymeleaf.org">
 
-<head>
+<head th:fragment="common_head(head_title, links)">
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
@@ -10,17 +10,18 @@
 
     <!--<link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">-->
 
-    <title>spring-webmvc-example</title>
+    <title th:replace="${head_title}">spring-webmvc-example</title>
 
     <link rel="stylesheet" th:href="@{/resources/css/layout.css}">
+    <th:block th:replace="${links}"/>
 
 </head>
 
-<body>
+<body th:fragment="layout(template, menu)">
 <header>
     <nav aria-label="Navigation">
         <ul th:remove="all">
-            <li th:fragment="menuItem (link,active,title)" class="active"
+            <li th:fragment="menuItem(link, active, title)" class="active"
                 th:class="${active==menu ? 'active' : ''}">
                 <a th:href="@{__${link}__}" th:title="${title}">
                     <span th:text="${title}">span title</span>
@@ -29,13 +30,13 @@
         </ul>
 
         <ul>
-            <li th:replace="::menuItem ('/','home','Home')">
+            <li th:replace="::menuItem('/', 'home', 'Home')">
                 <a href="/">
                     <span>Home</span>
                 </a>
             </li>
 
-            <li th:replace="::menuItem ('/pets','pets','Pet')">
+            <li th:replace="::menuItem('/pets', 'pets', 'Pet')">
                 <a href="/pet">
                     <span>Pet</span>
                 </a>
