@@ -22,7 +22,7 @@
     <nav aria-label="Navigation">
         <ul th:remove="all">
             <li th:fragment="menuItem(link, active, title)" class="active"
-                th:class="${active==menu ? 'active' : ''}">
+                th:class="${active== menu ? 'active' : ''}">
                 <a th:href="@{__${link}__}" th:title="${title}">
                     <span th:text="${title}">span title</span>
                 </a>
@@ -36,7 +36,7 @@
                 </a>
             </li>
 
-            <li th:replace="::menuItem('/pets', 'pets', 'Pet')">
+            <li th:replace="::menuItem('/list', 'list', 'Pet')">
                 <a href="/pet">
                     <span>Pet</span>
                 </a>

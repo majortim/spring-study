@@ -22,6 +22,7 @@ public class DatabaseConfig {
 
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("/database/hsqldb/schema.sql"));
+        resourceDatabasePopulator.addScripts(new ClassPathResource("/database/hsqldb/pet.sql"));
         DatabasePopulatorUtils.execute(resourceDatabasePopulator, ds);
 
         return ds;

@@ -21,7 +21,7 @@ public class PetController {
         this.petService = petService;
     }
 
-    @GetMapping("/pets")
+    @GetMapping("/list")
     public String pets() {
         return "pets";
     }

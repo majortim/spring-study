@@ -40,6 +40,10 @@ main div.container {
     padding: 10px;
 }
 
+main div.register_link {
+    margin: 0 0 1vw 1vw;
+}
+
 main table {
     border-collapse: collapse;
     border-spacing: 0px;

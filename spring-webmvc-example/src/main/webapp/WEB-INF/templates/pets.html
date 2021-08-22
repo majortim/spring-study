@@ -5,34 +5,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
     <title>Pet 목록</title>
+    <link rel="stylesheet" th:href="@{/resources/library/gridjs/theme/mermaid.min.css}"></link>
 </head>
 <body th:replace="~{fragments/layout :: layout(~{::body}, 'pets')}">
-    <div class="container">
-        <div>
-            <a href="/register" th:href="@{/register}">등록</a>
-        </div>
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>이름</th>
-                    <th>소유주</th>
-                    <th>종</th>
-                    <th>성별</th>
-                    <th>생일</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+<div class="container">
+    <div class="register_link">
+        <a href="/register" th:href="@{/register}">등록</a>
     </div>
+    <div id="div_table">
+    </div>
+</div>
 
-    <script th:inline="javascript">
+<script th:inline="javascript">
         const CONTEXT_PATH = [[${#request.getContextPath()}]];
     </script>
-    <script th:src="@{/resources/library/axios/axios.min.js}"></script>
-    <script th:src="@{/resources/js/pet.js}"></script>
+<script th:src="@{/resources/library/axios/axios.min.js}"></script>
+<script th:src="@{/resources/library/gridjs/gridjs.umd.js}"></script>
+<script th:src="@{/resources/js/pet.js}"></script>
 </body>
 
 </html>

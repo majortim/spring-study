@@ -15,13 +15,13 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <maven.test.skip>true</maven.test.skip>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <org.log4j-version>2.14.1</org.log4j-version>
         <org.springframework-version>5.3.9</org.springframework-version>
         <org.springframework.data-version>2.5.3</org.springframework.data-version>
         <org.thymeleaf-version>3.0.12.RELEASE</org.thymeleaf-version>
         <org.taglibs-version>1.2.5</org.taglibs-version>
+        <com.fasterxml.jackson-version>2.12.4</com.fasterxml.jackson-version>
         <org.junit-version>5.7.2</org.junit-version>
     </properties>
 
@@ -42,6 +42,7 @@
             <artifactId>spring-data-jdbc</artifactId>
             <version>2.2.3</version>
         </dependency>
+
 
         <!-- @Inject -->
         <dependency>
@@ -81,7 +82,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.12.4</version>
+            <version>${com.fasterxml.jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${com.fasterxml.jackson-version}</version>
         </dependency>
 
         <!-- Servlet API -->
@@ -179,20 +185,21 @@
 
     </dependencies>
 
-    <build>
-        <finalName>spring-webmvc-example</finalName>
-    </build>
     <!--
     <build>
+        <finalName>spring-webmvc-example</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webappDirectory>${tomcat.webapps}\${project.build.finalName}</webappDirectory>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     -->
+
 </project>

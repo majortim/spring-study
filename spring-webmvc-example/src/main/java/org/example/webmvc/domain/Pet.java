@@ -10,17 +10,17 @@ public class Pet {
     private final String name;
     private final String owner;
     private final String species;
-    private final String sex;
+    private final Sex sex;
     private final LocalDate birth;
     private final LocalDate death;
 
-    public Pet(long id, String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
+    public Pet(long id, String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this(name, owner, species, sex, birth, death);
         this.id = id;
     }
 
     @PersistenceConstructor
-    public Pet(String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
+    public Pet(String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
         this.species = species;
@@ -45,7 +45,7 @@ public class Pet {
         return species;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
@@ -62,6 +62,23 @@ public class Pet {
     public String toString() {
         return String.format("Pet (id = %d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
     }
+    public enum Sex  {
+        M("수컷"),
+        F("암컷");
+
+        private String value;
+
+        Sex(String value) {
+            this.value =value;
+        }
+
+        public String getKey() {
+            return name();
+        }
+        public String getValue() {
+            return value;
+        }
+    }
 
     public static PetBuilder builder() {
         return new PetBuilder();
@@ -72,7 +89,7 @@ public class Pet {
         private String name;
         private String owner;
         private String species;
-        private String sex;
+        private Sex sex;
         private LocalDate birth;
         private LocalDate death;
 
@@ -98,7 +115,7 @@ public class Pet {
             return this;
         }
 
-        public PetBuilder sex(String sex) {
+        public PetBuilder sex(Sex sex) {
             this.sex = sex;
             return this;
         }

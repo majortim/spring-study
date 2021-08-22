@@ -2,13 +2,15 @@ package org.example.webmvc.service;
 
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.domain.PetRepository;
+import org.example.webmvc.web.dto.PetResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -25,38 +27,19 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public <S extends Pet> Iterable<S> saveAll(Iterable<S> pets) {
-        return petRepository.saveAll(pets);
+    public Optional<PetResponseDto> findById(Long id) {
+
+        return petRepository.findById(id).map(PetResponseDto::new);
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return petRepository.existsById(id);
+    public List<PetResponseDto> findAll() {
+        return petRepository.findAll().stream().map(PetResponseDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Pet> findById(Long id) {
-        return petRepository.findById(id);
-    }
-
-    @Override
-    public Iterable<Pet> findAll() {
-        return petRepository.findAll();
-    }
-
-    @Override
-    public Page<Pet> findAll(Pageable pageable) {
-        return petRepository.findAll(pageable);
-    }
-
-    @Override
-    public Iterable<Pet> findAll(Sort sort) {
-        return petRepository.findAll(sort);
-    }
-
-    @Override
-    public Iterable<Pet> findAllById(Iterable<Long> ids) {
-        return petRepository.findAllById(ids);
+    public Page<PetResponseDto> findAll(Pageable pageable) {
+        return petRepository.findAll(pageable).map(PetResponseDto::new);
     }
 
     @Override
@@ -72,16 +55,6 @@ public class PetServiceImpl implements PetService {
     @Override
     public void delete(Pet pet) {
         petRepository.delete(pet);
-    }
-
-    @Override
-    public void deleteAllById(Iterable<? extends Long> ids) {
-        petRepository.deleteAllById(ids);
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends Pet> pets) {
-        petRepository.deleteAll(pets);
     }
 
     @Override
