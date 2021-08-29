@@ -1,23 +1,23 @@
 package org.example.webmvc.web.dto;
 
-//import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.Size;
 import org.example.webmvc.domain.Pet;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class PetRequestDto {
-    @Size(max = 10)
+    @Size(max = 10, message = "이름을 10자 이내로 입력해주세요.")
     @NotBlank(message = "이름을 작성해주세요.")
     private String name;
-    @Size(max = 20)
+    @Size(max = 20, message = "소유주 이름을 20자 이내로 입력해주세요.")
     @NotBlank(message = "소유주 이름을 작성해주세요.")
     private String owner;
-    @Size(max = 30)
+    @Size(max = 30, message = "종을 30자 이내로 입력해주세요.")
     @NotBlank(message = "종을 작성해주세요.")
     private String species;
+    @NotNull(message = "성별을 선택해주세요.")
     private Pet.Sex sex;
     private LocalDate birth;
     private LocalDate death;

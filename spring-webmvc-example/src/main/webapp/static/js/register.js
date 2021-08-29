@@ -1,13 +1,19 @@
-const birth = document.querySelector('#birth');
+//IIFE
+(function () {
+    const birth = document.querySelector('#birth');
+    flatpickr(birth, {"locale" : "ko"});
 
-flatpickr(birth, {"locale" : "ko"});
+    const onChangeInputHandler = function(evt) {
+        const cl = (evt.target.type === "radio") ? evt.target.parentElement.classList : evt.target.classList;
 
-/*
-const error_field_name = document.getElementById('error_field').innerText;
-const error_field = document.getElementById(error_field_name);
+        if(cl.contains("field_error"))
+            cl.remove("field_error");
+    }
 
-if(error_field){
-    alert(error_field.previousElementSibling.innerText + "이 올바르게 입력되지 않았습니다.");
-    error_field.focus();
-}
- */
+    document.querySelectorAll('.field_error, .field_error input')
+        .forEach(
+            function(element){
+                element.addEventListener('change', onChangeInputHandler)
+            }
+        );
+})();

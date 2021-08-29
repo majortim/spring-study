@@ -9,40 +9,47 @@
 </head>
 <body th:replace="~{fragments/layout :: layout(~{::body}, 'pets')}">
     <div class="container">
-        <!--/*@thymesVar id="pet" type="org.example.webmvc.web.dto.PetRequestDto"*/-->
-
         <form method="post" th:object="${pet}">
             <div>
                 <label for="name">이름</label>
-                <input type="text" id="name" name="name" class="" maxlength="10" th:field="*{name}" th:errorclass="fieldError">
+                <input type="text" id="name" name="name" maxlength="10" th:field="*{name}" th:errorclass="field_error">
+            </div>
+            <div th:if="${#fields.hasErrors('name')}">
+                <th:block th:errors="*{name}" />
             </div>
             <div>
-                <label for="owner">견주</label>
-                <input type="text" id="owner" name="owner" class="" maxlength="20" th:field="*{owner}" th:errorclass="fieldError">
+                <label for="owner">소유주</label>
+                <input type="text" id="owner" name="owner" maxlength="20" th:field="*{owner}" th:errorclass="field_error">
+            </div>
+            <div th:if="${#fields.hasErrors('owner')}">
+                <th:block th:errors="*{owner}" />
             </div>
             <div>
                 <label for="species">견종</label>
-                <input type="text" id="species" name="species" class="" maxlength="30" th:field="*{species}" th:errorclass="fieldError">
+                <input type="text" id="species" name="species" maxlength="30" th:field="*{species}" th:errorclass="field_error">
             </div>
-            <br>
-            <div>
-                <label for="birth">생일</label>
-                <input type="text" id="birth" name="birth" class="" th:field="*{birth}" th:errorclass="fieldError">
+            <div th:if="${#fields.hasErrors('species')}">
+                <th:block th:errors="*{species}" />
             </div>
             <div>
-                <input type="radio" id="sex_m" name="sex" value="M" class="" th:field="*{sex}" th:errorclass="fieldError">
+                <span th:class="${#fields.hasErrors('sex')}? field_error">
+                <input type="radio" id="sex_m" name="sex" value="M" th:field="*{sex}">
                 <label for="sex_m">수컷</label>
                 <input type="radio" id="sex_f" name="sex" value="F" th:field="*{sex}">
                 <label for="sex_f">암컷</label>
+                </span>
+            </div>
+            <div th:if="${#fields.hasErrors('sex')}">
+                <th:block th:errors="*{sex}" />
+            </div>
+            <div>
+                <label for="birth">생일</label>
+                <input type="text" id="birth" name="birth" th:field="*{birth}" th:errorclass="field_error">
             </div>
             <div>
                 <button type="submit">등록</button>
             </div>
         </form>
-
-        <!--/*@thymesVar id="errorField" type="java.lang.String"*/-->
-        <div id="error_field" class="sr-only" th:text="${errorField}"></div>
-        <div>테스트</div>
     </div>
 
     <script th:src="@{/resources/library/flatpickr/flatpickr.min.js}"></script>

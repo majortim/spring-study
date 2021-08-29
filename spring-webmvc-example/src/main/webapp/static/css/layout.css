@@ -62,3 +62,7 @@ main form button[type="submit"] {
     border: 0;
     clip: rect(0, 0, 0, 0);
 }
+
+form input.field_error, form span.field_error {
+    outline: solid red;
+}
