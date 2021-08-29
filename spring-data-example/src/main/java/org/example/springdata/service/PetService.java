@@ -10,6 +10,7 @@ public interface PetService {
     List<Pet> findAllByName(String name);
     Iterable<Pet> findAll();
     void deleteAll();
+    void deleteByName(String name);
     Pet save(Pet pet);
     void testTransaction(Pet pet);
 }

@@ -2,6 +2,7 @@ package org.example.springdata.service;
 
 import org.example.springdata.domain.Pet;
 import org.example.springdata.domain.PetRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,12 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    public void deleteByName(String name) {
+        petRepository.deleteByName(name);
+
+    }
+
+    @Override
     public Pet save(Pet pet) {
         return petRepository.save(pet);
     }
@@ -44,6 +51,6 @@ public class PetServiceImpl implements PetService {
     @Override
     public void testTransaction(Pet pet) {
         petRepository.save(pet);
-        throw new RuntimeException(pet.toString());
+       throw new RuntimeException(pet.toString());
     }
 }

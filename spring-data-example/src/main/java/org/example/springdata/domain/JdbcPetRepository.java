@@ -52,6 +52,13 @@ public class JdbcPetRepository implements PetRepository {
     }
 
     @Override
+    public void deleteByName(String name) {
+        Map<String, String> param = new HashMap<>();
+        param.put("name", name);
+        namedParameterJdbcOperations.update("DELETE FROM pet WHERE name = :name", param);
+    }
+
+    @Override
     public List<Pet> findAllByName(String name) {
         Map<String, Object> param = new HashMap<>();
         param.put("name", name);

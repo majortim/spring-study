@@ -19,7 +19,7 @@ public class JdbcConfig  {
         return new DataSourceTransactionManager(dataSource);
     }
     @Bean
-    public NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
+    public NamedParameterJdbcOperations namedParameterJdbcOperations(@Qualifier("dataSource") DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 }

@@ -39,6 +39,8 @@ public class Main {
             logger.error("testTransaction", e);
         }
 
+        petService.deleteByName(pet2.getName());
+
         logger.debug("list: {}", petService.findAll());
     }
 }

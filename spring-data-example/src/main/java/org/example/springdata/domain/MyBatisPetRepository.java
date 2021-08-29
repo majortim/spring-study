@@ -87,4 +87,9 @@ public class MyBatisPetRepository implements PetRepository{
 
         return null;
     }
+
+    @Override
+    public void deleteByName(String name) {
+
+    }
 }

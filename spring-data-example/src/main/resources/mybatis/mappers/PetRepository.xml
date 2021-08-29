@@ -24,4 +24,6 @@
         INSERT INTO pet
         VALUES(#{name}, #{owner}, #{species}, #{sex}, #{birth}, #{death})
     </insert>
+
+
 </mapper>
