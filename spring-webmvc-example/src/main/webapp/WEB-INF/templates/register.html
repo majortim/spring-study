@@ -5,39 +5,44 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
     <title>Pet 등록</title>
-    <link rel="stylesheet" th:href="@{/resources/library/flatpickr/flatpickr.min.css}"></link>
+    <link rel="stylesheet" th:href="@{/resources/library/flatpickr/flatpickr.min.css}">
 </head>
 <body th:replace="~{fragments/layout :: layout(~{::body}, 'pets')}">
     <div class="container">
-        <form method="post">
+        <!--/*@thymesVar id="pet" type="org.example.webmvc.web.dto.PetRequestDto"*/-->
+
+        <form method="post" th:object="${pet}">
             <div>
                 <label for="name">이름</label>
-                <input type="text" id="name" name="name">
+                <input type="text" id="name" name="name" class="" maxlength="10" th:field="*{name}" th:errorclass="fieldError">
             </div>
             <div>
                 <label for="owner">견주</label>
-                <input type="text" id="owner" name="owner">
+                <input type="text" id="owner" name="owner" class="" maxlength="20" th:field="*{owner}" th:errorclass="fieldError">
             </div>
             <div>
                 <label for="species">견종</label>
-                <input type="text" id="species" name="species">
+                <input type="text" id="species" name="species" class="" maxlength="30" th:field="*{species}" th:errorclass="fieldError">
             </div>
             <br>
             <div>
                 <label for="birth">생일</label>
-                <input type="text" id="birth" name="birth">
+                <input type="text" id="birth" name="birth" class="" th:field="*{birth}" th:errorclass="fieldError">
             </div>
             <div>
-                <input type="radio" id="sex_m" name="sex" value="M"
-                       checked>
+                <input type="radio" id="sex_m" name="sex" value="M" class="" th:field="*{sex}" th:errorclass="fieldError">
                 <label for="sex_m">수컷</label>
-                <input type="radio" id="sex_f" name="sex" value="F">
+                <input type="radio" id="sex_f" name="sex" value="F" th:field="*{sex}">
                 <label for="sex_f">암컷</label>
             </div>
             <div>
                 <button type="submit">등록</button>
             </div>
         </form>
+
+        <!--/*@thymesVar id="errorField" type="java.lang.String"*/-->
+        <div id="error_field" class="sr-only" th:text="${errorField}"></div>
+        <div>테스트</div>
     </div>
 
     <script th:src="@{/resources/library/flatpickr/flatpickr.min.js}"></script>

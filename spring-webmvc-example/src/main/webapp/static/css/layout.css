@@ -44,16 +44,21 @@ main div.register_link {
     margin: 0 0 1vw 1vw;
 }
 
-main table {
-    border-collapse: collapse;
-    border-spacing: 0px;
-}
-
-main table, th, td {
-     padding: 5px;
-     border: 1px solid black;
+main #div_table {
+    width: 90%;
 }
 
 main form button[type="submit"] {
     margin: 8px 0;
+}
+
+.sr-only {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
 }

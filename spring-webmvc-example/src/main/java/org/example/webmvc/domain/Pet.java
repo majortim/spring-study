@@ -62,6 +62,7 @@ public class Pet {
     public String toString() {
         return String.format("Pet (id = %d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
     }
+
     public enum Sex  {
         M("수컷"),
         F("암컷");

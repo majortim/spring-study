@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" >
+
+<head th:replace="~{fragments/layout :: common_head(~{::title}, ~{})}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <title>Pet 저장소</title>
+</head>
+<body th:replace="~{fragments/layout :: layout(~{::body}, 'home')}">
+    <div class="container">
+        <!--/*@thymesVar id="exception" type="java.lang.Throwable"*/-->
+        <p th:text="${(#response.status == 404)} ? '페이지를 찾을 수 없습니다' : ${exception.getMessage()}">메시지</p>
+    </div>
+</body>
+
+</html>

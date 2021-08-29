@@ -1,7 +1,7 @@
 package org.example.webmvc.web;
 
 import org.example.webmvc.service.PetService;
-import org.example.webmvc.web.dto.PetDto;
+import org.example.webmvc.web.dto.PetRequestDto;
 import org.example.webmvc.web.dto.PetResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,13 +56,13 @@ public class PetRestController {
     }
 
     @PostMapping("/pets/{petId}/edit")
-    public String processUpdateForm(PetDto petDto, BindingResult result, ModelMap model) {
+    public String processUpdateForm(@PathVariable("petId") long petId, PetRequestDto petRequestDto, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             logger.error("");
             logger.debug("error field: {}", Objects.requireNonNull(result.getFieldError()).getArguments());
             model.put("error", result.getFieldError().getField());
         } else {
-            this.petService.save(petDto.toEntity());
+            this.petService.save(petRequestDto.toEntity());
         }
 
         return "pets";

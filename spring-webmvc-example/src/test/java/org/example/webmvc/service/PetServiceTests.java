@@ -2,21 +2,18 @@ package org.example.webmvc.service;
 
 import org.example.webmvc.config.RootConfig;
 import org.example.webmvc.domain.Pet;
-import org.example.webmvc.web.dto.PetResponseDto;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {RootConfig.class})
@@ -26,7 +23,6 @@ public class PetServiceTests {
 
     @Autowired
     PetService petService;
-
 
     @BeforeEach
     @AfterEach
@@ -39,7 +35,7 @@ public class PetServiceTests {
     @Test
     @Order(1)
     @Commit
-    public void deleteByIdTest() {
+    void deleteByIdTest() {
         petService.deleteById(1L);
         logger.debug("list: {}", petService.findAll());
     }
@@ -47,7 +43,7 @@ public class PetServiceTests {
     @Test
     @Order(0)
     @Commit
-    public void findAllTest() {
+    void findAllTest() {
         Pet pet1 = Pet.builder()
                 .name("뚱식이")
                 .owner("문세윤")

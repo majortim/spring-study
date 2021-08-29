@@ -1,4 +1,5 @@
 <!doctype html>
+<!--suppress ThymeleafVariablesResolveInspection -->
 <html lang="ko"  xmlns:th="https://www.thymeleaf.org">
 
 <head th:fragment="common_head(head_title, links)">
@@ -8,10 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--<link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">-->
-
     <title th:replace="${head_title}">spring-webmvc-example</title>
-
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/img/favicon.ico}" >
     <link rel="stylesheet" th:href="@{/resources/css/layout.css}">
     <th:block th:replace="${links}"/>
 
@@ -37,7 +36,7 @@
             </li>
 
             <li th:replace="::menuItem('/list', 'list', 'Pet')">
-                <a href="/pet">
+                <a href="/list">
                     <span>Pet</span>
                 </a>
             </li>

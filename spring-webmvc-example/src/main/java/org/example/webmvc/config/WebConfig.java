@@ -4,6 +4,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -35,6 +37,7 @@ import java.util.TimeZone;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -77,7 +80,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .moduleClassLoader( WebMvcConfigurationSupport.class.getClassLoader());
 
-        converters.remove(6);
-        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+        //converters.remove(6);
+        converters.add(converters.size() - 1, new MappingJackson2HttpMessageConverter(builder.build()));
+
+        logger.debug("converters: {}", converters);
     }
 }
