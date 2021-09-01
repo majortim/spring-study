@@ -7,12 +7,12 @@ import java.time.LocalDate;
 public class Pet {
     @Id
     private Long id;
-    private final String name;
-    private final String owner;
-    private final String species;
-    private final Sex sex;
-    private final LocalDate birth;
-    private final LocalDate death;
+    private String name;
+    private String owner;
+    private String species;
+    private Sex sex;
+    private LocalDate birth;
+    private LocalDate death;
 
     public Pet(long id, String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this(name, owner, species, sex, birth, death);
@@ -21,6 +21,10 @@ public class Pet {
 
     @PersistenceConstructor
     public Pet(String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
+        update(name, owner, species, sex, birth, death);
+    }
+
+    public void update(String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
         this.species = species;
@@ -138,6 +142,9 @@ public class Pet {
 
         public Pet build() {
             return new Pet(name, owner, species, sex, birth, death);
+        }
+        public Pet buildWithId() {
+            return new Pet(id, name, owner, species, sex, birth, death);
         }
     }
 }

@@ -6,9 +6,11 @@ import org.example.webmvc.web.dto.PetRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -25,8 +27,8 @@ public class PetController {
     }
 
     @GetMapping("/list")
-    public String pets() {
-        return "pets";
+    public String list() {
+        return "list";
     }
 
     @GetMapping("/register")
@@ -35,17 +37,43 @@ public class PetController {
     }
 
     @PostMapping("/register")
-    public String registerProcess(@Valid @ModelAttribute("pet") PetRequestDto petRequestDto , BindingResult result) {
-        try{
-            if(result.hasErrors()) {
-                return "register";
-            }
-            Pet saved = petService.save(petRequestDto.toEntity());
-            logger.debug("saved: {}", saved);
-            return "redirect:/list";
-        } catch (RuntimeException e) {
-            logger.error(e.getClass().getName(), e);
-            throw e;
+    public String registerProcess(@Valid @ModelAttribute("pet") PetRequestDto petRequestDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "register";
         }
+        Pet saved = petService.save(petRequestDto.toEntity());
+        logger.debug("saved: {}", saved);
+        return "redirect:/list";
+
+    }
+
+    @GetMapping("/pets/{petId}/edit")
+    public String initUpdateForm(@PathVariable("petId") long petId, ModelMap model) {
+        Pet pet = petService.findById(petId).orElse(null);
+        model.put("pet", pet);
+
+        return "register";
+    }
+
+    @PostMapping("/pets/{petId}/edit")
+    public String processUpdateForm(@PathVariable("petId") long petId, @Valid @ModelAttribute("pet") PetRequestDto petRequestDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "register";
+        }
+
+        Pet pet = petService.findById(petId).orElse(null);
+        if (pet != null) {
+            pet.update(petRequestDto.getName(), petRequestDto.getOwner(), petRequestDto.getSpecies(), petRequestDto.getSex(), petRequestDto.getBirth(), petRequestDto.getDeath());
+            petService.save(pet);
+        }
+
+        return "redirect:/list";
+    }
+
+    @PostMapping("/pets/{petId}/delete")
+    public String delete(@PathVariable("petId") long petId) {
+        petService.deleteById(petId);
+
+        return "redirect:/list";
     }
 }
