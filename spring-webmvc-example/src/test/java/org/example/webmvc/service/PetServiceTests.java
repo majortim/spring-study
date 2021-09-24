@@ -1,6 +1,6 @@
 package org.example.webmvc.service;
 
-import org.example.webmvc.config.RootConfig;
+import org.example.webmvc.config.root.RootConfig;
 import org.example.webmvc.domain.Pet;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

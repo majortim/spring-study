@@ -143,8 +143,5 @@ public class Pet {
         public Pet build() {
             return new Pet(name, owner, species, sex, birth, death);
         }
-        public Pet buildWithId() {
-            return new Pet(id, name, owner, species, sex, birth, death);
-        }
     }
 }

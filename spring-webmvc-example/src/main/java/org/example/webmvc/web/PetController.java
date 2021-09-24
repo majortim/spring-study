@@ -48,20 +48,20 @@ public class PetController {
     }
 
     @GetMapping("/pets/{petId}/edit")
-    public String initUpdateForm(@PathVariable("petId") long petId, ModelMap model) {
-        Pet pet = petService.findById(petId).orElse(null);
-        model.put("pet", pet);
+    public String initUpdateForm(@PathVariable("petId") Pet pet, ModelMap model) {
+
+        if (pet != null)
+            model.put("pet", pet);
 
         return "register";
     }
 
     @PostMapping("/pets/{petId}/edit")
-    public String processUpdateForm(@PathVariable("petId") long petId, @Valid @ModelAttribute("pet") PetRequestDto petRequestDto, BindingResult result) {
+    public String processUpdateForm(@PathVariable("petId") Pet pet, @Valid @ModelAttribute("pet") PetRequestDto petRequestDto, BindingResult result) {
         if (result.hasErrors()) {
             return "register";
         }
 
-        Pet pet = petService.findById(petId).orElse(null);
         if (pet != null) {
             pet.update(petRequestDto.getName(), petRequestDto.getOwner(), petRequestDto.getSpecies(), petRequestDto.getSex(), petRequestDto.getBirth(), petRequestDto.getDeath());
             petService.save(pet);

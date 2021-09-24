@@ -1,5 +1,8 @@
 package org.example.webmvc.config;
 
+import org.example.webmvc.config.root.RootConfig;
+import org.example.webmvc.config.servlet.ThymeleafConfig;
+import org.example.webmvc.config.servlet.WebConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

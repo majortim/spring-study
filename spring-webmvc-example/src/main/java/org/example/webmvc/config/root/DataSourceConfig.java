@@ -1,4 +1,4 @@
-package org.example.webmvc.config;
+package org.example.webmvc.config.root;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import javax.sql.DataSource;
 
 @Configuration
-public class DatabaseConfig {
+public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource(){

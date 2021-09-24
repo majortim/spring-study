@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PetService {
-
     <S extends Pet> S save(S pet);
     Optional<Pet> findById(Long id);
     List<Pet> findAll();

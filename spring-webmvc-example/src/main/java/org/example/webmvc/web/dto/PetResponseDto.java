@@ -1,5 +1,8 @@
 package org.example.webmvc.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.example.webmvc.domain.Pet;
 
 import java.time.LocalDate;
@@ -11,7 +14,9 @@ public class PetResponseDto {
     private final String owner;
     private final String species;
     private final String sex;
+    @JsonProperty
     private final LocalDate birth;
+    @JsonProperty
     private final LocalDate death;
 
     public PetResponseDto(Pet pet) {

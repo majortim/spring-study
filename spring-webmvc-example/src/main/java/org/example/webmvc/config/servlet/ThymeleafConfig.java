@@ -1,4 +1,4 @@
-package org.example.webmvc.config;
+package org.example.webmvc.config.servlet;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +30,7 @@ public class ThymeleafConfig {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         // Template cache is true by default. Set to false if you want
         // templates to be automatically updated when modified.
-
         boolean isCacheable = Arrays.asList(applicationContext.getEnvironment().getActiveProfiles()).contains("production");
-
         templateResolver.setCacheable(isCacheable);
         return templateResolver;
     }

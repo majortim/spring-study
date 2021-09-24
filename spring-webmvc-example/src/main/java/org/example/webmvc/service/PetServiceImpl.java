@@ -26,7 +26,6 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public Optional<Pet> findById(Long id) {
-
         return petRepository.findById(id);
     }
 

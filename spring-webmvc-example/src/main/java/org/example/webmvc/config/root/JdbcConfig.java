@@ -1,4 +1,4 @@
-package org.example.webmvc.config;
+package org.example.webmvc.config.root;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +20,7 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
     public TransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
+
     @Bean
     public NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);

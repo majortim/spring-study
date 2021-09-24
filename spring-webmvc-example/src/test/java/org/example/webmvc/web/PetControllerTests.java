@@ -1,7 +1,7 @@
 package org.example.webmvc.web;
 
-import org.example.webmvc.config.RootConfig;
-import org.example.webmvc.config.WebConfig;
+import org.example.webmvc.config.root.RootConfig;
+import org.example.webmvc.config.servlet.WebConfig;
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.service.PetService;
 import org.junit.jupiter.api.*;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //({RootConfig.class, WebConfig.class})
 @ContextHierarchy({
         @ContextConfiguration(classes = RootConfig.class),
-        @ContextConfiguration(classes = WebConfig.class)
+        @ContextConfiguration(classes = {WebConfig.class})
 })
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PetControllerTests {
@@ -94,7 +94,7 @@ public class PetControllerTests {
 
         Pet pet = Pet.builder()
                 .name("콜라")
-                .owner("")
+                .owner("정준하")
                 .species("개")
                 .sex(Pet.Sex.F)
                 .birth(LocalDate.of(2004, 9, 7))
