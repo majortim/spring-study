@@ -31,6 +31,7 @@ public class PetRequestDto {
         this.death = death;
     }
 
+    /*
     public void setName(String name) {
         this.name = name;
     }
@@ -54,6 +55,7 @@ public class PetRequestDto {
     public void setDeath(LocalDate death) {
         this.death = death;
     }
+    */
 
     public String getName() {
         return name;
