@@ -1,6 +1,6 @@
-package org.example.webmvc.web.dto;
+package org.example.test.web.dto;
 
-import org.example.webmvc.domain.Pet;
+import org.example.test.domain.Pet;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -44,22 +44,50 @@ public class PetRequestDto {
         return owner;
     }
 
-//    public String getSpecies() {
-//        return species;
+    public String getSpecies() {
+        return species;
+    }
+
+    public Pet.Sex getSex() {
+        return sex;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public LocalDate getDeath() {
+        return death;
+    }
+
+//    public void setName(String name) {
+//        this.name = name;
 //    }
 //
-//    public Pet.Sex getSex() {
-//        return sex;
+//    public void setOwner(String owner) {
+//        this.owner = owner;
 //    }
 //
-//    public LocalDate getBirth() {
-//        return birth;
+//    public void setSpecies(String species) {
+//        this.species = species;
 //    }
 //
-//    public LocalDate getDeath() {
-//        return death;
+//    public void setSex(Pet.Sex sex) {
+//        this.sex = sex;
 //    }
 //
+//    public void setBirth(LocalDate birth) {
+//        this.birth = birth;
+//    }
+//
+//    public void setDeath(LocalDate death) {
+//        this.death = death;
+//    }
+
+    @Override
+    public String toString() {
+        return String.format("PetRequestDto (name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", name, owner, species, sex, birth, death);
+    }
 
     public Pet toEntity() {
         return Pet.builder()

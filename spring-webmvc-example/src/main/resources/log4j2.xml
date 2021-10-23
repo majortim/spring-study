@@ -7,6 +7,7 @@
     </Appenders>
 
     <Loggers>
+        <!--
         <Logger name="org.springframework.web.servlet" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
@@ -24,8 +25,9 @@
         <Logger name="java.sql.PreparedStatement" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
+        -->
 
-        <Root level="ERROR">
+        <Root level="ALL">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

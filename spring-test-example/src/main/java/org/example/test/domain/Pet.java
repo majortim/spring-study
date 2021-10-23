@@ -1,11 +1,9 @@
-package org.example.webmvc.domain;
+package org.example.test.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.LocalDate;
+
 public class Pet {
-    @Id
     private Long id;
     private String name;
     private String owner;
@@ -14,12 +12,12 @@ public class Pet {
     private LocalDate birth;
     private LocalDate death;
 
+    @SuppressWarnings("unused")
     public Pet(long id, String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this(name, owner, species, sex, birth, death);
         this.id = id;
     }
 
-    @PersistenceConstructor
     public Pet(String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         update(name, owner, species, sex, birth, death);
     }

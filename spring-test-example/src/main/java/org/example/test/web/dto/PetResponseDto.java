@@ -1,6 +1,6 @@
-package org.example.webmvc.web.dto;
+package org.example.test.web.dto;
 
-import org.example.webmvc.domain.Pet;
+import org.example.test.domain.Pet;
 
 import java.time.LocalDate;
 

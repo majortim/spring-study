@@ -2,16 +2,16 @@ package org.example.webmvc.web;
 
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.service.PetService;
+import org.example.webmvc.web.dto.PetRequestDto;
 import org.example.webmvc.web.dto.PetResponseDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 @RestController
 public class PetRestController {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final PetService petService;
 
     public PetRestController(PetService petService) {
@@ -49,6 +51,37 @@ public class PetRestController {
                 .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body( petService.findAll().stream()
+                        .map(PetResponseDto::new).collect(Collectors.toList()) );
+    }
+
+    @GetMapping("/pets/test2")
+    public ResponseEntity<List<PetResponseDto>> test2(PetRequestDto petRequestDto) {
+        logger.debug("petRequestDto: {}", petRequestDto);
+        logger.debug("name: {}", petRequestDto.getName());
+        logger.debug("owner: {}", petRequestDto.getOwner());
+
+
+        return ResponseEntity.status(201)
+                .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body( petService.findByNameAndOwnerAllIgnoreCase(petRequestDto.getName(), petRequestDto.getOwner()).stream()
+                        .map(PetResponseDto::new).collect(Collectors.toList()) );
+    }
+
+
+
+    @RequestMapping(value = "/pets/test3", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<List<PetResponseDto>> test3(@RequestBody PetRequestDto petRequestDto) {
+        logger.debug("requestBody: {}", petRequestDto);
+        logger.debug("body name: {}", petRequestDto.getName());
+        logger.debug("body owner: {}", petRequestDto.getOwner());
+
+
+        return ResponseEntity.status(201)
+                .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
+                .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body( petService.findByNameAndOwnerAllIgnoreCase(petRequestDto.getName(), petRequestDto.getOwner()).stream()
                         .map(PetResponseDto::new).collect(Collectors.toList()) );
     }
 

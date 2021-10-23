@@ -63,7 +63,7 @@ public class PetController {
         }
 
         if (pet != null) {
-            pet.update(petRequestDto.getName(), petRequestDto.getOwner(), petRequestDto.getSpecies(), petRequestDto.getSex(), petRequestDto.getBirth(), petRequestDto.getDeath());
+            pet.update(petRequestDto.toEntity());
             petService.save(pet);
         }
 
