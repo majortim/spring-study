@@ -98,7 +98,30 @@ public class PetControllerTests {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
+    void testSend() {
+        PetRequestDto petRequestDto = new PetRequestDto("Emma", "Carl Ballard", "개", Pet.Sex.F
+                , LocalDate.of(2009, 1, 31), null);
+
+        Pet pet  = petRequestDto.toEntity();
+
+        try{
+            ResultActions actions = mockMvc.perform(post("/register")
+                    .param("name", pet.getName())
+                    .param("owner", pet.getOwner())
+//                    .param("species", pet.getSpecies())
+                    .param("sex", pet.getSex().name())
+                    .param("birth", pet.getBirth().toString())
+                    .contentType(MediaType.APPLICATION_JSON)
+            );
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    @Order(4)
     void testBody() {
         try {
             PetRequestDto petRequestDto = new PetRequestDto();
@@ -108,7 +131,6 @@ public class PetControllerTests {
 
             RequestEntity<PetRequestDto> httpEntity = RequestEntity
                     .method(HttpMethod.GET, "/body")
-                    .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(petRequestDto);
 

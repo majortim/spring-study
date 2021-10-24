@@ -23,9 +23,8 @@ public class PetRequestDto {
     private LocalDate death;
 
     @SuppressWarnings("unused")
-    //public PetRequestDto(){ }
+    public PetRequestDto(){ }
 
-    /*
     public PetRequestDto(String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
@@ -34,7 +33,6 @@ public class PetRequestDto {
         this.birth = birth;
         this.death = death;
     }
-    */
 
     public String getName() {
         return name;

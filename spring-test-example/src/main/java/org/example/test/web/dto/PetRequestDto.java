@@ -23,9 +23,8 @@ public class PetRequestDto {
     private LocalDate death;
 
     @SuppressWarnings("unused")
-    //public PetRequestDto(){ }
+    public PetRequestDto(){ }
 
-    /*
     public PetRequestDto(String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
@@ -34,55 +33,30 @@ public class PetRequestDto {
         this.birth = birth;
         this.death = death;
     }
-    */
 
-    public String getName() {
-        return name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getOwner() {
-        return owner;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
-    public String getSpecies() {
-        return species;
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
-    public Pet.Sex getSex() {
-        return sex;
+    public void setSex(Pet.Sex sex) {
+        this.sex = sex;
     }
 
-    public LocalDate getBirth() {
-        return birth;
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
     }
 
-    public LocalDate getDeath() {
-        return death;
+    public void setDeath(LocalDate death) {
+        this.death = death;
     }
-
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setOwner(String owner) {
-//        this.owner = owner;
-//    }
-//
-//    public void setSpecies(String species) {
-//        this.species = species;
-//    }
-//
-//    public void setSex(Pet.Sex sex) {
-//        this.sex = sex;
-//    }
-//
-//    public void setBirth(LocalDate birth) {
-//        this.birth = birth;
-//    }
-//
-//    public void setDeath(LocalDate death) {
-//        this.death = death;
-//    }
 
     @Override
     public String toString() {
