@@ -79,7 +79,6 @@ public class PetRestController {
 
         return ResponseEntity.status(201)
                 .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
-                .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body( petService.findByNameAndOwnerAllIgnoreCase(petRequestDto.getName(), petRequestDto.getOwner()).stream()
                         .map(PetResponseDto::new).collect(Collectors.toList()) );

@@ -40,7 +40,7 @@ public class Pet {
         this.death = pet.death;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -84,9 +84,6 @@ public class Pet {
             this.value =value;
         }
 
-        public String getKey() {
-            return name();
-        }
         public String getValue() {
             return value;
         }

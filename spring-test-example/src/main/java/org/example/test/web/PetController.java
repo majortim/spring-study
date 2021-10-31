@@ -1,10 +1,11 @@
 package org.example.test.web;
 
-import org.example.test.web.dto.PetRequestDto;
-import org.example.test.web.dto.PetResponseDto;
+import org.example.test.web.dto.PetRequest;
+import org.example.test.web.dto.PetRequestModel;
+import org.example.test.web.dto.PetResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.MethodParameter;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,58 +16,97 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Locale;
+import java.util.Optional;
 
 @Controller
 public class PetController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/register")
-    public String register(@ModelAttribute PetRequestDto petRequestDto) {
-        logger.debug("petRequestDto: {}", petRequestDto);
+    public String register(@ModelAttribute("pet") PetRequestModel petRequestModel) {
         return "test";
     }
 
 
     @PostMapping("/register")
-    public String registerProcess(@Valid @ModelAttribute PetRequestDto petRequestDto, BindingResult result) {
+    public String registerProcess(@Valid @ModelAttribute("pet") PetRequestModel petRequestModel, BindingResult result) {
+
         if (result.hasErrors()) {
             throw new RuntimeException();
         }
 
-        logger.debug("petRequestDto: {}", petRequestDto);
         return "test";
     }
 
     @RequestMapping(value = "/send", method = {RequestMethod.GET, RequestMethod.POST})
-    public String sendWithRequestBodyForm(@Valid @RequestBody PetRequestDto petRequestDto, BindingResult result) {
+    public String sendWithRequestBodyForm(@Valid @RequestBody PetRequest petRequest, BindingResult result) {
 
         if (result.hasErrors()) {
-            throw new RuntimeException();
+            throw new RuntimeException(Optional.ofNullable(result.getFieldError())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage).orElse(""));
         }
 
-        logger.debug("requestBody: {}", petRequestDto);
+        logger.debug("petRequest: {}", petRequest);
 
         return "test";
     }
 
-    @ResponseBody
     @RequestMapping(value = "/body", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<PetResponseDto> sendWithRequestBody(@Valid @RequestBody PetRequestDto petRequestDto, BindingResult result) {
-        HttpStatus httpStatus = HttpStatus.OK;
+    public ResponseEntity<?> sendWithRequestBody(
+            @Valid @RequestBody PetRequest petRequest
+            , BindingResult result
+    ) {
 
         if (result.hasErrors()) {
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            return ResponseEntity.internalServerError()
+                    .body(Optional.ofNullable(result.getFieldError())
+                            .map(DefaultMessageSourceResolvable::getDefaultMessage));
         }
 
-        PetResponseDto petResponseDto = new PetResponseDto(petRequestDto.toEntity());
+        logger.debug("petRequest: {}", petRequest);
 
-        logger.debug("requestBody: {}", petRequestDto);
-        logger.debug("petResponseDto: {}", petResponseDto);
+        PetResponse petResponse = new PetResponse(petRequest.toEntity());
 
         return ResponseEntity
-                .status(httpStatus)
+                .status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(petResponseDto);
+                .body(petResponse);
+    }
+
+    @RequestMapping(value = "/model", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<?> model(@ModelAttribute PetRequest petRequest) {
+        PetResponse petResponse = new PetResponse(petRequest.toEntity());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.CONTENT_LANGUAGE, Locale.KOREA.toLanguageTag())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(petResponse);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/pojo", method = {RequestMethod.GET, RequestMethod.POST})
+    public PetResponse pojo(@Valid @ModelAttribute PetRequestModel petRequestModel, BindingResult result) {
+
+        if (result.hasErrors()) {
+            throw new RuntimeException(Optional.ofNullable(result.getFieldError())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage).orElse(""));
+        }
+        return new PetResponse(petRequestModel.toEntity());
+    }
+
+    @SuppressWarnings("unconsumed")
+    @ResponseBody
+    @GetMapping(value = "/pets/name/{name}/owner/{owner}/species/{species}/sex/{sex}")
+    public PetResponse pet(@ModelAttribute("pet") PetRequestModel petRequestModel) {
+        logger.debug("{}", petRequestModel);
+
+        return new PetResponse(petRequestModel.toEntity());
+    }
+
+    @RequestMapping(value = "/no", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<String> noResponse(@RequestBody PetRequest petRequest) {
+        return ResponseEntity.ok().body("no");
     }
 }
