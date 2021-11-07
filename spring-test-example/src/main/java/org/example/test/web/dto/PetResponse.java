@@ -6,6 +6,7 @@ import org.example.test.domain.Pet;
 
 import java.time.LocalDate;
 
+@SuppressWarnings("unused")
 public class PetResponse {
 
     private Long id;

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class PetRequestDto {
+public class PetRequest {
     @Size(max = 10, message = "이름을 10자 이내로 입력해주세요.")
     @NotBlank(message = "이름을 작성해주세요.")
     private String name;
@@ -22,10 +22,7 @@ public class PetRequestDto {
     private LocalDate birth;
     private LocalDate death;
 
-    @SuppressWarnings("unused")
-    public PetRequestDto(){ }
-
-    public PetRequestDto(String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death) {
+    public PetRequest(String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
         this.species = species;
@@ -42,22 +39,22 @@ public class PetRequestDto {
         return owner;
     }
 
-//    public String getSpecies() {
-//        return species;
-//    }
-//
-//    public Pet.Sex getSex() {
-//        return sex;
-//    }
-//
-//    public LocalDate getBirth() {
-//        return birth;
-//    }
-//
-//    public LocalDate getDeath() {
-//        return death;
-//    }
-//
+    public String getSpecies() {
+        return species;
+    }
+
+    public Pet.Sex getSex() {
+        return sex;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public LocalDate getDeath() {
+        return death;
+    }
+
 
     public Pet toEntity() {
         return Pet.builder()

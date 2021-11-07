@@ -4,12 +4,12 @@ import org.example.webmvc.config.root.RootConfig;
 import org.example.webmvc.config.servlet.WebConfig;
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.service.PetService;
-import org.example.webmvc.web.dto.PetRequestDto;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
@@ -21,8 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -86,43 +84,6 @@ public class PetControllerTests {
             }
         } catch (Exception e) {
             logger.error("testListAll");
-            throw e;
-        }
-    }
-
-    @Test
-    @Order(3)
-    void testTest2() {
-        try {
-            ResponseEntity<?> entity = restTemplate.getForEntity("/pets/test2?name=Emma&owner=Carl Ballard", List.class);
-            logger.debug("test2: {}", entity);
-
-        } catch (Exception e) {
-            logger.error("testTest2");
-            throw e;
-        }
-    }
-
-    @Test
-    @Order(4)
-    void testTest3() {
-        try {
-            PetRequestDto petRequestDto = new PetRequestDto();
-//                    new PetRequestDto("Emma", "Carl Ballard", "개", Pet.Sex.F
-//                    , LocalDate.of(2009, 1, 31), null);
-
-
-            RequestEntity<PetRequestDto> httpEntity = RequestEntity
-                    .method(HttpMethod.GET, "/pets/test3")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(petRequestDto);
-
-            ResponseEntity<?> entity = restTemplate.exchange(httpEntity, List.class);
-            logger.debug("test3: {}", entity);
-
-        } catch (Exception e) {
-            logger.error("testTest3 error");
             throw e;
         }
     }

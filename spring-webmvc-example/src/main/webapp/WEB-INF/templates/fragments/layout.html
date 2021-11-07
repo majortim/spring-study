@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--suppress ThymeleafVariablesResolveInspection -->
 <html lang="ko"  xmlns:th="https://www.thymeleaf.org">
 
@@ -21,7 +21,7 @@
     <nav aria-label="Navigation">
         <ul th:remove="all">
             <li th:fragment="menuItem(link, active, title)" class="active"
-                th:class="${active== menu ? 'active' : ''}">
+                th:class="${active == menu ? 'active' : ''}">
                 <a th:href="@{__${link}__}" th:title="${title}">
                     <span th:text="${title}">span title</span>
                 </a>

@@ -1,25 +1,30 @@
 package org.example.webmvc.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.example.webmvc.convert.PetSexSerializer;
 import org.example.webmvc.domain.Pet;
 
 import java.time.LocalDate;
 
-public class PetResponseDto {
+@SuppressWarnings("unused")
+public class PetResponse {
 
     private final Long id;
     private final String name;
     private final String owner;
     private final String species;
-    private final String sex;
+    @JsonSerialize(using = PetSexSerializer.class)
+    private final Pet.Sex sex;
     private final LocalDate birth;
     private final LocalDate death;
 
-    public PetResponseDto(Pet pet) {
+
+    public PetResponse(Pet pet) {
         this.id = pet.getId();
         this.name = pet.getName();
         this.owner = pet.getOwner();
         this.species = pet.getSpecies();
-        this.sex = pet.getSex().getValue();
+        this.sex = pet.getSex();
         this.birth = pet.getBirth();
         this.death = pet.getDeath();
     }
@@ -40,7 +45,7 @@ public class PetResponseDto {
         return species;
     }
 
-    public String getSex() {
+    public Pet.Sex getSex() {
         return sex;
     }
 
@@ -50,5 +55,10 @@ public class PetResponseDto {
 
     public LocalDate getDeath() {
         return death;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("PetResponse(id =%d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
     }
 }
