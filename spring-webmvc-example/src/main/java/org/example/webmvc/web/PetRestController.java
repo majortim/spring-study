@@ -33,7 +33,7 @@ public class PetRestController {
     @GetMapping(value = "/pets", produces = "application/json; charset=utf-8")
     public ResponseEntity<Map<String, Object>> pets(@RequestParam Map<String, String> param, Pageable pageable) {
         Map<String, Object> resultMap = new HashMap<>();
-        Page<PetResponse> pages = petService.findAll(pageable).map(PetResponse::new);
+        Page<PetResponse> pages = petService.findAll(pageable).map(PetResponse::from);
 
         resultMap.put("pageRequest", pages.getPageable());
         resultMap.put("count", pages.getTotalElements());
@@ -45,16 +45,11 @@ public class PetRestController {
 
     @GetMapping(value = "/pets/all", produces = "application/json; charset=utf-8")
     public ResponseEntity<List<PetResponse>> all() {
-        return ResponseEntity.ok(petService.findAll().stream().map(PetResponse::new).collect(Collectors.toList()));
+        return ResponseEntity.ok(petService.findAll().stream().map(PetResponse::from).collect(Collectors.toList()));
     }
 
     @GetMapping(value = "/pets/{petId}", produces = "application/json; charset=utf-8")
     public PetResponse get(@PathVariable("petId") Pet pet) {
-        return Optional.of(pet).map(PetResponse::new).orElse(null);
-    }
-
-    @GetMapping(value = "/pets/{petId}/xml",  produces = "application/xml; charset=utf-8")
-    public PetResponse getXml(@PathVariable("petId") Pet pet) {
-        return Optional.of(pet).map(PetResponse::new).orElse(null);
+        return Optional.of(pet).map(PetResponse::from).orElse(null);
     }
 }

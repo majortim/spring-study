@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @Controller
@@ -48,10 +49,9 @@ public class PetController {
     }
 
     @GetMapping("/pets/{petId}/edit")
-    public String initUpdateForm(@PathVariable("petId") Pet pet, ModelMap model) {
+    public String initUpdateForm(@PathVariable("petId") Long id, ModelMap model) {
 
-        if (pet != null)
-            model.put("pet", pet);
+        Optional.of(petService.getById(id)).ifPresent(petResponse -> model.put("pet", petResponse));
 
         return "register";
     }

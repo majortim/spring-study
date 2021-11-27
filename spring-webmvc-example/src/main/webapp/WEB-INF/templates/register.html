@@ -14,32 +14,35 @@
                 <label for="name">이름</label>
                 <input type="text" id="name" maxlength="10" th:field="*{name}" th:errorclass="field_error">
             </div>
-            <div th:if="${#fields.hasErrors('name')}">
+            <div th:if="${#fields.hasErrors('name')}" class="error_block">
                 <th:block th:errors="*{name}" />
             </div>
             <div>
                 <label for="owner">소유주</label>
                 <input type="text" id="owner" maxlength="20" th:field="*{owner}" th:errorclass="field_error">
             </div>
-            <div th:if="${#fields.hasErrors('owner')}">
+            <div th:if="${#fields.hasErrors('owner')}" class="error_block">
                 <th:block th:errors="*{owner}" />
             </div>
             <div>
                 <label for="species">종</label>
                 <input type="text" id="species" maxlength="30" th:field="*{species}" th:errorclass="field_error">
             </div>
-            <div th:if="${#fields.hasErrors('species')}">
+            <div th:if="${#fields.hasErrors('species')}" class="error_block">
                 <th:block th:errors="*{species}" />
             </div>
             <div>
-                <span th:class="${#fields.hasErrors('sex')}? field_error">
-                <input type="radio" id="sex_m" value="M" th:field="*{sex}">
-                <label for="sex_m">수컷</label>
-                <input type="radio" id="sex_f" value="F" th:field="*{sex}">
-                <label for="sex_f">암컷</label>
-                </span>
+                <fieldset>
+                    <legend>성별</legend>
+                    <span th:class="${#fields.hasErrors('sex')}? field_error">
+                    <input type="radio" id="sex_m" value="M" th:field="*{sex}">
+                    <label for="sex_m">수컷</label>
+                    <input type="radio" id="sex_f" value="F" th:field="*{sex}">
+                    <label for="sex_f">암컷</label>
+                    </span>
+                </fieldset>
             </div>
-            <div th:if="${#fields.hasErrors('sex')}">
+             <div th:if="${#fields.hasErrors('sex')}" class="error_block">
                 <th:block th:errors="*{sex}" />
             </div>
             <div>

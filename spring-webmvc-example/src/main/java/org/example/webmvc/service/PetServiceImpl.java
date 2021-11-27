@@ -2,6 +2,7 @@ package org.example.webmvc.service;
 
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.domain.PetRepository;
+import org.example.webmvc.web.dto.PetResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class PetServiceImpl implements PetService {
     @Override
     public Optional<Pet> findById(Long id) {
         return petRepository.findById(id);
+    }
+
+    @Override
+    public PetResponse getById(Long id) {
+        return petRepository.getById(id);
     }
 
     @Override

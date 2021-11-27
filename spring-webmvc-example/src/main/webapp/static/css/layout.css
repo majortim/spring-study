@@ -52,10 +52,25 @@ main #div_table {
     width: 90%;
 }
 
+main form * {
+    margin: 4px 0;
+}
+
+main form input[type=text], main form fieldset {
+    width: 120px;
+}
+
 main form button[type="submit"] {
     margin: 8px 0;
 }
 
-form input.field_error, form span.field_error {
+main form div.error_block {
+    margin-left: 12px;
+}
+main form div.error_block::before {
+     content: " - ";
+ }
+
+main form .field_error {
     outline: solid red;
 }

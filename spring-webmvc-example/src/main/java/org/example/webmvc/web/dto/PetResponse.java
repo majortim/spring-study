@@ -3,12 +3,15 @@ package org.example.webmvc.web.dto;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.example.webmvc.convert.PetSexSerializer;
 import org.example.webmvc.domain.Pet;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.LocalDate;
 
 @SuppressWarnings("unused")
 public class PetResponse {
 
+    @Id
     private final Long id;
     private final String name;
     private final String owner;
@@ -18,8 +21,18 @@ public class PetResponse {
     private final LocalDate birth;
     private final LocalDate death;
 
+    @PersistenceConstructor
+    public PetResponse(Long id, String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.species = species;
+        this.sex = sex;
+        this.birth = birth;
+        this.death = death;
+    }
 
-    public PetResponse(Pet pet) {
+    private PetResponse(Pet pet) {
         this.id = pet.getId();
         this.name = pet.getName();
         this.owner = pet.getOwner();
@@ -55,6 +68,10 @@ public class PetResponse {
 
     public LocalDate getDeath() {
         return death;
+    }
+
+    public static PetResponse from(Pet pet){
+        return new PetResponse(pet);
     }
 
     @Override
