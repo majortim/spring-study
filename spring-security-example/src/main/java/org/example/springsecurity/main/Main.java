@@ -1,6 +1,5 @@
 package org.example.springsecurity.main;
 
-import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.example.springsecurity.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.*;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.crypto.util.EncodingUtils;
 
@@ -34,8 +32,6 @@ public class Main {
         String dpe = passwordEncoder.encode("test");
         String scrypt = sCryptEncoder.encode("test");
         String bcrypt = bCryptEncoder.encode("test");
-        String sha = DigestUtils.sha256Hex("test");
-        String sha2 = new StandardPasswordEncoder("koka").encode("test");
         String sha3 = "";
         try {
             MessageDigest dg = MessageDigest.getInstance("SHA-256");
@@ -59,17 +55,11 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
         logger.debug("dpe: {}", dpe);
         logger.debug("scrypt: {}", scrypt);
         logger.debug("bcrypt: {}", bcrypt);
         logger.debug("bcrypt: {}", bcrypt);
-        logger.debug("sha: {}", sha);
-        logger.debug("sha2: {}", sha2);
         logger.debug("sha3: {}", sha3);
-        logger.debug("sha length: {}", sha.getBytes().length);
-        logger.debug("sha2 length: {}", sha2.getBytes().length);
         logger.debug("sha3 length: {}", sha3.getBytes().length);
         logger.debug("matches: {}", sCryptEncoder.matches("test", "{scrypt}" + scrypt));
         logger.debug("matches: {}", bCryptEncoder.matches("test", bcrypt));
@@ -80,10 +70,8 @@ public class Main {
         String idForEncode = "sha256";
         Map<String,PasswordEncoder> encoders = new HashMap<>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("noop", NoOpPasswordEncoder.getInstance());
         encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
         encoders.put("scrypt", new SCryptPasswordEncoder());
-        encoders.put(idForEncode, new StandardPasswordEncoder());
 
         PasswordEncoder pe = new DelegatingPasswordEncoder(idForEncode, encoders);
         PasswordEncoder be = new BCryptPasswordEncoder();
