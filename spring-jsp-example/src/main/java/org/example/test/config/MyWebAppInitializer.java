@@ -1,7 +1,6 @@
-package org.example.webmvc.config;
+package org.example.test.config;
 
-import org.example.webmvc.config.root.RootConfig;
-import org.example.webmvc.config.servlet.WebConfig;
+import org.example.test.config.servlet.WebConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -13,7 +12,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { RootConfig.class };
+        return new Class<?>[] {  };
     }
 
     @Override

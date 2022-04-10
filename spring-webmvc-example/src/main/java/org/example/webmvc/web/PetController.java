@@ -20,8 +20,10 @@ import java.util.Optional;
 @Controller
 public class PetController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private final PetService petService;
+    private static final String LIST = "list";
+    private static final String REGISTER = "register";
+    private static final String REDIRECT_LIST = "redirect:/list";
 
     public PetController(PetService petService) {
         this.petService = petService;
@@ -29,22 +31,22 @@ public class PetController {
 
     @GetMapping("/list")
     public String list() {
-        return "list";
+        return LIST;
     }
 
     @GetMapping("/register")
     public String register(@ModelAttribute("pet") PetRequest petRequest) {
-        return "register";
+        return REGISTER;
     }
 
     @PostMapping("/register")
     public String registerProcess(@Valid @ModelAttribute("pet") PetRequest petRequest, BindingResult result) {
         if (result.hasErrors()) {
-            return "register";
+            return REGISTER;
         }
         Pet saved = petService.save(petRequest.toEntity());
         logger.debug("saved: {}", saved);
-        return "redirect:/list";
+        return REDIRECT_LIST;
 
     }
 
@@ -53,13 +55,13 @@ public class PetController {
 
         Optional.of(petService.getById(id)).ifPresent(petResponse -> model.put("pet", petResponse));
 
-        return "register";
+        return REGISTER;
     }
 
     @PostMapping("/pets/{petId}/edit")
     public String processUpdateForm(@PathVariable("petId") Pet pet, @Valid @ModelAttribute("pet") PetRequest petRequest, BindingResult result) {
         if (result.hasErrors()) {
-            return "register";
+            return REGISTER;
         }
 
         if (pet != null) {
@@ -67,13 +69,13 @@ public class PetController {
             petService.save(pet);
         }
 
-        return "redirect:/list";
+        return REDIRECT_LIST;
     }
 
     @PostMapping("/pets/{petId}/delete")
     public String delete(@PathVariable("petId") long petId) {
         petService.deleteById(petId);
 
-        return "redirect:/list";
+        return REDIRECT_LIST;
     }
 }

@@ -3,10 +3,9 @@ package org.example.webmvc.web;
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.service.PetService;
 import org.example.webmvc.web.dto.PetResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class PetRestController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final PetService petService;
 
@@ -30,7 +28,7 @@ public class PetRestController {
         this.petService = petService;
     }
 
-    @GetMapping(value = "/pets", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/pets", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> pets(@RequestParam Map<String, String> param, Pageable pageable) {
         Map<String, Object> resultMap = new HashMap<>();
         Page<PetResponse> pages = petService.findAll(pageable).map(PetResponse::from);
@@ -43,12 +41,12 @@ public class PetRestController {
         return ResponseEntity.ok(resultMap);
     }
 
-    @GetMapping(value = "/pets/all", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/pets/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PetResponse>> all() {
         return ResponseEntity.ok(petService.findAll().stream().map(PetResponse::from).collect(Collectors.toList()));
     }
 
-    @GetMapping(value = "/pets/{petId}", produces = "application/json; charset=utf-8")
+    @GetMapping(value = "/pets/{petId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PetResponse get(@PathVariable("petId") Pet pet) {
         return Optional.of(pet).map(PetResponse::from).orElse(null);
     }

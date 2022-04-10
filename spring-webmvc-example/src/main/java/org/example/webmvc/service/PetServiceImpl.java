@@ -46,11 +46,6 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Pet> findByNameAndOwnerAllIgnoreCase(String name, String owner) {
-        return petRepository.findByNameAndOwnerAllIgnoreCase(name, owner);
-    }
-
-    @Override
     public long count() {
         return petRepository.count();
     }
@@ -58,11 +53,6 @@ public class PetServiceImpl implements PetService {
     @Override
     public void deleteById(Long id) {
         petRepository.deleteById(id);
-    }
-
-    @Override
-    public void delete(Pet pet) {
-        petRepository.delete(pet);
     }
 
     @Override

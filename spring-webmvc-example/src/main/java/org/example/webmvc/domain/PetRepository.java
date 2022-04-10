@@ -11,7 +11,5 @@ public interface PetRepository extends PagingAndSortingRepository<Pet, Long> {
     PetResponse getById(Long id);
     List<Pet> findAll();
     Page<Pet> findAll(Pageable pageable);
-    List<Pet> findAllById(Iterable<Long> ids);
-    List<Pet> findByNameAndOwnerAllIgnoreCase(String name, String owner);
 
 }

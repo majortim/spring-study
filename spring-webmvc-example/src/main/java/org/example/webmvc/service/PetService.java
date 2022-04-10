@@ -14,9 +14,7 @@ public interface PetService {
     PetResponse getById(Long id);
     List<Pet> findAll();
     Page<Pet> findAll(Pageable pageable);
-    List<Pet> findByNameAndOwnerAllIgnoreCase(String name, String owner);
     long count();
     void deleteById(Long id);
-    void delete(Pet pet);
     void deleteAll();
 }

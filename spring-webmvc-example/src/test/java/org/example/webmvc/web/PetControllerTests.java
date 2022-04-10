@@ -4,102 +4,71 @@ import org.example.webmvc.config.root.RootConfig;
 import org.example.webmvc.config.servlet.WebConfig;
 import org.example.webmvc.domain.Pet;
 import org.example.webmvc.service.PetService;
+import org.example.webmvc.web.dto.PetRequest;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-import org.springframework.test.web.client.MockMvcClientHttpRequestFactory;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringJUnitWebConfig
-//({RootConfig.class, WebConfig.class})
-@ContextHierarchy({
-        @ContextConfiguration(classes = RootConfig.class),
-        @ContextConfiguration(classes = {WebConfig.class})
-})
+@SpringJUnitWebConfig({RootConfig.class, WebConfig.class})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PetControllerTests {
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     WebApplicationContext wac;
     @Autowired
     PetService petService;
 
     MockMvc mockMvc;
-    RestTemplate restTemplate;
 
     @BeforeEach
     void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
+//                .addFilters(new CharacterEncodingFilter(StandardCharsets.UTF_8.toString(), true))
                 .build();
-        this.restTemplate = new RestTemplate(new MockMvcClientHttpRequestFactory(mockMvc));
     }
 
     @Test
     @Order(1)
-    void testList() {
-        logger.debug("list: {}", restTemplate.getForEntity("/pets?page={page}&size={size}", Map.class, 1, 10));
+    void testList() throws Exception {
 
 
-        ResponseEntity<?> entity = restTemplate.getForEntity("/pets", Map.class);
-        logger.debug("all: {}", entity);
-        Object body = entity.getBody();
+        mockMvc.perform(get("/pets?page={page}&size={size}", 1, 10))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.[?(@.length()> 0)]").exists());
 
-        if (body instanceof Map) {
-            Map<?, ?> map = ((Map<?, ?>) body);
-            Object list = map.get("list");
-            if (list instanceof List) {
-                logger.debug("count: {}", ((List<?>) list).size());
-            }
-        }
     }
 
     @Test
     @Order(2)
-    void testListAll() {
-        try {
-            ResponseEntity<?> entity = restTemplate.getForEntity("/pets/all", List.class);
-            logger.debug("all: {}", entity);
-            Object body = entity.getBody();
-
-            if (body instanceof List) {
-                logger.debug("count: {}", ((List<?>) body).size());
-            }
-        } catch (Exception e) {
-            logger.error("testListAll");
-            throw e;
-        }
+    void testListAll() throws Exception {
+        mockMvc.perform(get("/pets/all")).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.[?(@.length()> 0)]").exists());
     }
 
     @Test
     @Order(0)
     void testRegister() throws Exception {
 
-        Pet pet = Pet.builder()
-                .name("콜라")
-                .owner("정준하")
-                .species("개")
-                .sex(Pet.Sex.F)
-                .birth(LocalDate.of(2004, 9, 7))
-                .death(LocalDate.of(2020, 11, 2))
-                .build();
+        PetRequest pet = PetRequest.of(
+                "콜라",
+                "정준하",
+                "개",
+                Pet.Sex.F,
+                LocalDate.of(2004, 9, 7),
+                LocalDate.of(2020, 11, 2)
+        );
 
         ResultActions actions = mockMvc.perform(post("/register")
                 .param("name", pet.getName())
@@ -112,11 +81,7 @@ public class PetControllerTests {
                 .accept(MediaType.APPLICATION_JSON)
         );
 
-        actions.andExpect(model().hasNoErrors());
-
-        MockHttpServletResponse response = actions.andReturn().getResponse();
-        logger.debug("result: {}", response);
-
-
+        actions.andExpect(status().isFound())
+                .andExpect(redirectedUrl("/list"));
     }
 }

@@ -31,6 +31,10 @@ public class PetRequest {
         this.death = death;
     }
 
+    public static PetRequest of(String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death){
+        return new PetRequest(name, owner, species, sex, birth, death);
+    }
+
     public String getName() {
         return name;
     }

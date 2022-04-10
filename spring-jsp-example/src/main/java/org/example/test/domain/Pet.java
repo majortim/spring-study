@@ -1,23 +1,28 @@
-package org.example.webmvc.domain;
+package org.example.test.domain;
 
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDate;
+
+@SuppressWarnings("unused")
 public class Pet {
-    @Id
     private Long id;
     private String name;
     private String owner;
     private String species;
-    @Enumerated(EnumType.STRING)
     private Sex sex;
     private LocalDate birth;
     private LocalDate death;
 
-    public Pet(Long id, String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
+    public Pet(long id, String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
+        this(name, owner, species, sex, birth, death);
         this.id = id;
+    }
+
+    public Pet(String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
+        update(name, owner, species, sex, birth, death);
+    }
+
+    public void update(String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
         this.species = species;
@@ -35,7 +40,7 @@ public class Pet {
         this.death = pet.death;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -76,7 +81,7 @@ public class Pet {
         private final String value;
 
         Sex(String value) {
-            this.value = value;
+            this.value =value;
         }
 
         public String getValue() {
@@ -89,6 +94,7 @@ public class Pet {
     }
 
     public static class PetBuilder {
+        private Long id;
         private String name;
         private String owner;
         private String species;
@@ -97,6 +103,11 @@ public class Pet {
         private LocalDate death;
 
         private PetBuilder() {}
+
+        public PetBuilder id(long id) {
+            this.id = id;
+            return this;
+        }
 
         public PetBuilder name(String name) {
             this.name = name;
@@ -130,11 +141,11 @@ public class Pet {
 
         @Override
         public String toString() {
-            return String.format("PetBuilder(name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", name, owner, species, sex, birth, death);
+            return String.format("PetBuilder(id =%d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
         }
 
         public Pet build() {
-            return new Pet(null, name, owner, species, sex, birth, death);
+            return new Pet(name, owner, species, sex, birth, death);
         }
     }
 }

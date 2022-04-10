@@ -1,44 +1,55 @@
-import org.example.springsecurity.config.EncryptorConfig;
-import org.example.springsecurity.crypto.AesEncryptor;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = EncryptorConfig.class)
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 public class EncryptorsTests {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @Autowired
-    AesEncryptor aesEncryptor;
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Test
-    public void encryptTest() {
-        String salt = KeyGenerators.string().generateKey();
-        String password = "myPassword";
+    public void encryptTest() throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        logger.debug("password: {}", password);
-        logger.debug("salt: {}", salt);
+        BytesKeyGenerator generator = KeyGenerators.secureRandom(16);
+        byte[] key = generator.generateKey();
+        char[] hex = Hex.encode(key);
+        String hexString = String.valueOf(hex);
+
+        logger.debug("key: {}", key);
+        logger.debug("key length: {}", key.length);
+        logger.debug("hex: {}", hex);
+        logger.debug("hex length: {}", hex.length);
+
+        String password = hexString.substring(0, 16);
+        String salt = hexString.substring(16);
+
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        SecretKey secretKey = keyFactory.generateSecret(new PBEKeySpec(password.toCharArray(), Hex.decode(salt), 1024, 256));
+        logger.debug("format: {}", secretKey.getFormat());
+        logger.debug("encoded: {}", secretKey.getEncoded());
+        logger.debug("algorithm: {}", secretKey.getAlgorithm());
 
         TextEncryptor encryptor = Encryptors.delux(password, salt);
+        String rawText = "This is text!";
+        String cipherText = encryptor.encrypt(rawText);
 
-        logger.debug("text: {}", encryptor.encrypt("test"));
-    }
+        logger.debug("cipherText length: {}", cipherText.length());
+        logger.debug("1234 CT length: {}", encryptor.encrypt("1234").length());
+        logger.debug("test CT length: {}", encryptor.encrypt("test").length());
 
-    @Test
-    public void decryptTest() {
-//        String password = encoder.encode("myPassword");
-//        String salt = KeyGenerators.string().generateKey();
-//
-        TextEncryptor encryptor = Encryptors.delux("myPassword", "2d88cdd9ed91466a");
+        String decryptText = Encryptors.delux(password, salt).decrypt(cipherText);
+        logger.debug("decryptText: {}", decryptText);
 
-        logger.debug("text: {}", encryptor.decrypt("199be7bc06e2303b2607036bfc812d08206c19d84e2c0a426ad451206b59fc40446d3050"));
+        Assert.assertEquals(rawText, decryptText);
     }
 }

@@ -1,4 +1,4 @@
-package org.example.webmvc.config.servlet;
+package org.example.test.config.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -8,18 +8,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.http.converter.*;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.SourceHttpMessageConverter;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
@@ -33,16 +29,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @Configuration
-@Import({ThymeleafConfig.class})
-@ComponentScan(basePackages = "org.example.webmvc.web", includeFilters = @ComponentScan.Filter({Controller.class, ControllerAdvice.class}))
+@ComponentScan(basePackages = "org.example.test")
 @EnableWebMvc
-@EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer {
-//    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/static/");
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp();
     }
 
     @Override
