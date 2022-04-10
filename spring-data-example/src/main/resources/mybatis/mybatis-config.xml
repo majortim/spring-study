@@ -3,6 +3,6 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias type="org.example.springdata.domain.Pet" alias="Pet"/>
+        <typeAlias type="org.example.data.domain.Pet" alias="Pet"/>
     </typeAliases>
 </configuration>

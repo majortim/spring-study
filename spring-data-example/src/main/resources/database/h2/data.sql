@@ -1,0 +1,9 @@
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Emma','Carl Ballard','개','F','2009-01-31');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Brynne','Aristotle Turner','고양이','M','2013-04-23');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Elton','Brendan Burns','고양이','M','2009-01-05');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Cairo','Colin Peterson','개','M','2006-12-12');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Todd','Prescott Johnson','고양이','F','2008-09-07');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Geoffrey','Wallace Sanchez','고양이','F','2014-11-26');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Lucius','Ian Barron','개','F','2008-04-08');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Acton','Wayne Bender','개','F','2007-08-30');
+INSERT INTO pet (name,owner,species,sex,birth) VALUES ('Micah','Oren Mcpherson','고양이','F','2015-05-18');

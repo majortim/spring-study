@@ -25,7 +25,7 @@
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="org.example.springdata" level="TRACE" additivity="false">
+        <Logger name="org.example.data" level="TRACE" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         -->

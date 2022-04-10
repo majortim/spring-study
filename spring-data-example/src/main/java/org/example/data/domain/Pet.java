@@ -1,28 +1,24 @@
-package org.example.springdata.domain;
+package org.example.data.domain;
 
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
+
 public class Pet {
     @Id
-    private Long id;
-    private String name;
-    private String owner;
-    private String species;
-    private String sex;
-    private LocalDate birth;
-    private LocalDate death;
+    private final Long id;
+    private final String name;
+    private final String owner;
+    private final String species;
+    @Enumerated(EnumType.STRING)
+    private final Sex sex;
+    private final LocalDate birth;
+    private final LocalDate death;
 
-    public Pet(){
-
-    }
-
-    public Pet(long id, String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
-        this(name, owner, species, sex, birth, death);
+    public Pet(Long id, String name, String owner, String species, Sex sex, LocalDate birth, LocalDate death) {
         this.id = id;
-    }
-
-    public Pet(String name, String owner, String species, String sex, LocalDate birth, LocalDate death) {
         this.name = name;
         this.owner = owner;
         this.species = species;
@@ -31,7 +27,11 @@ public class Pet {
         this.death = death;
     }
 
-    public long getId() {
+    public Pet withId(Long id) {
+        return new Pet(id, this.name, this.owner, this.species, this.sex, this.birth, death);
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -47,8 +47,13 @@ public class Pet {
         return species;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Pet (id = %d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
     }
 
     public LocalDate getBirth() {
@@ -59,10 +64,19 @@ public class Pet {
         return death;
     }
 
+    public enum Sex  {
+        M("수컷"),
+        F("암컷");
 
-    @Override
-    public String toString() {
-        return String.format("Pet (id = %d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
+        private final String value;
+
+        Sex(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 
     public static PetBuilder builder() {
@@ -74,13 +88,13 @@ public class Pet {
         private String name;
         private String owner;
         private String species;
-        private String sex;
+        private Sex sex;
         private LocalDate birth;
         private LocalDate death;
 
         private PetBuilder() {}
 
-        public PetBuilder id(long id) {
+        public PetBuilder id(Long id) {
             this.id = id;
             return this;
         }
@@ -100,7 +114,7 @@ public class Pet {
             return this;
         }
 
-        public PetBuilder sex(String sex) {
+        public PetBuilder sex(Sex sex) {
             this.sex = sex;
             return this;
         }
@@ -117,14 +131,14 @@ public class Pet {
 
         @Override
         public String toString() {
-            return String.format("PetBuilder(id =%d, name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", id, name, owner, species, sex, birth, death);
+            return String.format("PetBuilder(name = %s, owner = %s, species = %s, sex = %s, birth = %s, death = %s)", name, owner, species, sex, birth, death);
         }
 
         public Pet build() {
-            return new Pet(name, owner, species, sex, birth, death);
+            return new Pet(null, name, owner, species, sex, birth, death);
         }
 
-        public Pet buildWithId(){
+        public Pet buildWithId() {
             return new Pet(id, name, owner, species, sex, birth, death);
         }
     }

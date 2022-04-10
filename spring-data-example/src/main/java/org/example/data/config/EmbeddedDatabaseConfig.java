@@ -1,24 +1,19 @@
-package org.example.springdata.config;
+package org.example.data.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 
-@Profile("embedded")
+//@Profile("embedded")
 @Configuration
 public class EmbeddedDatabaseConfig extends AbstractJdbcConfiguration {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Bean(name = "embeddedDataSource")
     public DataSource embeddedDataSource() {
         return new EmbeddedDatabaseBuilder()
                 .generateUniqueName(true)
@@ -26,17 +21,18 @@ public class EmbeddedDatabaseConfig extends AbstractJdbcConfiguration {
                 .setScriptEncoding("UTF-8")
                 .ignoreFailedDrops(true)
                 .addScript("classpath:/database/h2/schema.sql")
+                .addScript("classpath:/database/h2/data.sql")
                 .build();
     }
 
-    @Profile("hikari")
-    @Bean(name = "dataSource", destroyMethod = "close")
+//    @Profile("hikari")
+    @Bean(name = "dataSource")
     public DataSource dataSource() {
         DataSource dataSource = embeddedDataSource();
 
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDataSource(dataSource);
-        hikariConfig.setJdbcUrl("jdbc:h2:~/h2db;MODE=MySQL;DATABASE_TO_LOWER=TRUE");
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:h2db;MODE=MySQL;DATABASE_TO_LOWER=TRUE");
         return new HikariDataSource(hikariConfig);
     }
 }

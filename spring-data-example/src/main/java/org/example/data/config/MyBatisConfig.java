@@ -1,4 +1,4 @@
-package org.example.springdata.config;
+package org.example.data.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

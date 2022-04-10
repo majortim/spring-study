@@ -3,27 +3,53 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.example.springdata.domain">
-    <select id="count" resultType="long">
-        SELECT count(*)  FROM pet
+<mapper namespace="org.example.data.repository.PetRepository">
+
+    <select id="count" resultType="Long">
+        SELECT count(*) FROM pet
     </select>
 
-    <select id="findAllByName" resultType="Pet">
-        SELECT *  FROM pet WHERE name = #{name}
+    <select id="findAllByPath-name" resultType="Pet">
+        SELECT * FROM pet WHERE name = #{name}
     </select>
 
     <select id="findAll" resultType="Pet">
-        SELECT *  FROM pet
+        SELECT * FROM pet
+    </select>
+
+    <select id="findById" resultType="Pet">
+        SELECT * FROM pet WHERE id = #{id}
     </select>
 
     <delete id="deleteAll">
+        -- noinspection SqlWithoutWhere
         DELETE FROM pet
     </delete>
 
-    <insert id="save">
-        INSERT INTO pet
+    <delete id="deleteAll-name">
+        -- noinspection SqlWithoutWhere
+        DELETE FROM pet WHERE name = #{name}
+    </delete>
+
+    <delete id="delete-id">
+        DELETE FROM pet WHERE id = #{id}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pet(name, owner, species, sex, birth, death)
         VALUES(#{name}, #{owner}, #{species}, #{sex}, #{birth}, #{death})
     </insert>
+
+    <update id="update">
+        UPDATE pet SET
+                       name = #{name}
+                     , owner = #{owner}
+                     , species = #{species}
+                     , sex = #{sex}
+                     , birth = #{birth}
+                     , death  = #{death}
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>
