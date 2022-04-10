@@ -1,8 +1,6 @@
 package org.example.data.service;
 
 import org.example.data.config.AppConfig;
-import org.example.data.config.EmbeddedDatabaseConfig;
-import org.example.data.config.JdbcConfig;
 import org.example.data.domain.Pet;
 import org.example.data.repository.PetRepository;
 import org.junit.jupiter.api.Test;
@@ -19,8 +17,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles("jdbc")
-@SpringJUnitConfig({AppConfig.class, JdbcConfig.class, EmbeddedDatabaseConfig.class})
+@ActiveProfiles("mybatis")
+@SpringJUnitConfig(AppConfig.class)
 class PetServiceTests {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,7 +29,6 @@ class PetServiceTests {
 
     @Test
     void findAllTest() {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.debug("repo: {}", petRepository);
         List<Pet> result = new ArrayList<>();
         petService.findAll().iterator().forEachRemaining(result::add);

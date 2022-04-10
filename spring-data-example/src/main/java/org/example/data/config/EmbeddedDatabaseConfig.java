@@ -4,7 +4,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
@@ -12,7 +11,7 @@ import javax.sql.DataSource;
 
 //@Profile("embedded")
 @Configuration
-public class EmbeddedDatabaseConfig extends AbstractJdbcConfiguration {
+public class EmbeddedDatabaseConfig {
 
     public DataSource embeddedDataSource() {
         return new EmbeddedDatabaseBuilder()

@@ -2,15 +2,13 @@ package org.example.data.repository;
 
 import org.apache.ibatis.session.SqlSession;
 import org.example.data.domain.Pet;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Profile("mybatis")
-@Primary
+//@Profile("mybatis")
+//@Primary
 @Repository
 public class MyBatisPetRepository implements PetRepository {
     private final SqlSession sqlSession;

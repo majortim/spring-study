@@ -1,9 +1,6 @@
 package org.example.data.repository;
 
 import org.example.data.config.AppConfig;
-import org.example.data.config.EmbeddedDatabaseConfig;
-import org.example.data.config.JdbcConfig;
-import org.example.data.config.MyBatisConfig;
 import org.example.data.domain.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-@SpringJUnitConfig({AppConfig.class, JdbcConfig.class, EmbeddedDatabaseConfig.class})
+@SpringJUnitConfig(AppConfig.class)
 class PersonRepositoryTests {
     @Autowired
     PersonRepository repository;
