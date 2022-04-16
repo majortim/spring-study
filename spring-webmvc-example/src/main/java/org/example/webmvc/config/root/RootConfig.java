@@ -6,7 +6,7 @@ import org.springframework.context.annotation.FilterType;
 
 @Configuration
 @ComponentScan(basePackages = "org.example.webmvc" , excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASPECTJ, pattern = {"org.example.webmvc.config.servlet.*", "org.example.webmvc.web"})
+        @ComponentScan.Filter(type = FilterType.ASPECTJ, pattern = {"org.example.webmvc.config.servlet.*", "org.example.webmvc.web..*"})
 })
 public class RootConfig {
 }

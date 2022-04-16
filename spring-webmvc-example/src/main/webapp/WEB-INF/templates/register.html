@@ -34,7 +34,7 @@
             <div>
                 <fieldset>
                     <legend>성별</legend>
-                    <span th:class="${#fields.hasErrors('gender')}? field_error">
+                    <span th:class="${#fields.hasErrors('sex')}? field_error">
                     <input type="radio" id="sex_m" value="M" th:field="*{sex}">
                     <label for="sex_m">수컷</label>
                     <input type="radio" id="sex_f" value="F" th:field="*{sex}">

@@ -1,10 +1,9 @@
 package org.example.webmvc.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.example.webmvc.convert.PetSexSerializer;
+import org.example.webmvc.convert.PetSexConverter;
 import org.example.webmvc.domain.Pet;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.LocalDate;
 
@@ -16,12 +15,11 @@ public class PetResponse {
     private final String name;
     private final String owner;
     private final String species;
-    @JsonSerialize(using = PetSexSerializer.class)
+    @JsonSerialize(converter = PetSexConverter.class)
     private final Pet.Sex sex;
     private final LocalDate birth;
     private final LocalDate death;
 
-    @PersistenceConstructor
     public PetResponse(Long id, String name, String owner, String species, Pet.Sex sex, LocalDate birth, LocalDate death) {
         this.id = id;
         this.name = name;
@@ -30,16 +28,6 @@ public class PetResponse {
         this.sex = sex;
         this.birth = birth;
         this.death = death;
-    }
-
-    private PetResponse(Pet pet) {
-        this.id = pet.getId();
-        this.name = pet.getName();
-        this.owner = pet.getOwner();
-        this.species = pet.getSpecies();
-        this.sex = pet.getSex();
-        this.birth = pet.getBirth();
-        this.death = pet.getDeath();
     }
 
     public Long getId() {
@@ -71,7 +59,7 @@ public class PetResponse {
     }
 
     public static PetResponse from(Pet pet){
-        return new PetResponse(pet);
+        return new PetResponse(pet.getId(), pet.getName(), pet.getOwner(), pet.getSpecies(), pet.getSex(), pet.getBirth(), pet.getDeath());
     }
 
     @Override
