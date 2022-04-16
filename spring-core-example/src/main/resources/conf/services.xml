@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="student" class="org.example.core.domain.Student">
+        <constructor-arg name="name" value="민수"/>
+    </bean>
+
+    <bean id="student2" class="org.example.core.domain.Student">
+        <constructor-arg name="name" value="영수"/>
+    </bean>
+
+    <bean class="org.example.core.service.StudentService" primary="true">
+        <property name="student" ref="student"/>
+    </bean>
+
+    <bean id="argStudentService" class="org.example.core.service.StudentService">
+        <constructor-arg name="student" ref="student2"/>
+    </bean>
+
+    <bean id="noArgStudentService" class="org.example.core.service.StudentService">
+    </bean>
+</beans>
