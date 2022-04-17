@@ -4,16 +4,16 @@ import org.example.core.config.AppConfig;
 import org.example.core.domain.Student;
 import org.example.core.service.StudentService;
 import org.example.core.service.TestService;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
 
         try (
-                AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-                ClassPathXmlApplicationContext ctx2 = new ClassPathXmlApplicationContext("conf/services.xml")
+                GenericApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+                GenericApplicationContext ctx2 = new GenericXmlApplicationContext("conf/services.xml")
             )
         {
             TestService testService = ctx.getBean("testService", TestService.class);
