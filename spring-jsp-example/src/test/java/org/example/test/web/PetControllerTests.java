@@ -32,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringJUnitWebConfig(WebConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PetControllerTests {
+public class
+PetControllerTests {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     WebApplicationContext wac;
@@ -132,7 +133,7 @@ public class PetControllerTests {
     void testModel() throws Exception {
         PetRequest petRequest = getTestData();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        Map<String, String> map = objectMapper.convertValue(petRequest, new TypeReference<Map<String, String>>() {
+        Map<String, String> map = objectMapper.convertValue(petRequest, new TypeReference<>() {
         }); // (3)
         params.setAll(map);
 
