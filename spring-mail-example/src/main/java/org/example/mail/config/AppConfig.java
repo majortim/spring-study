@@ -1,4 +1,4 @@
-package org.example.config;
+package org.example.mail.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +28,10 @@ public class AppConfig {
 
         Properties props = sender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.enable", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.trust", host);
+        props.put("mail.smtp.socketFactory.class", "com.sun.mail.util.MailSSLSocketFactory");
+
         props.put("mail.debug", "true");
 
         return sender;
