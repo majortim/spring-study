@@ -32,7 +32,7 @@ public class AppConfig {
         props.put("mail.smtp.ssl.trust", host);
         props.put("mail.smtp.socketFactory.class", "com.sun.mail.util.MailSSLSocketFactory");
 
-        props.put("mail.debug", "true");
+//        props.put("mail.debug", "true");
 
         return sender;
     }
