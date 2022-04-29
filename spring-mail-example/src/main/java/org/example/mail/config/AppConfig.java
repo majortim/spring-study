@@ -12,25 +12,31 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:mail.properties")
 public class AppConfig {
-    @Value("${mail.host}")  String host;
-    @Value("${mail.port}")  int port;
-    @Value("${mail.username}")  String username;
-    @Value("${mail.password}")  String password;
+    @Value("${mail.transport.protocol}")
+    private String protocol;
+
+    @Value("${mail.smtp.host}")
+    private String host;
+    @Value("${mail.smtp.port}")
+    private int port;
+    @Value("${mail.username}")
+    private String username;
+    @Value("${mail.password}")
+    private String password;
 
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
 
+        sender.setProtocol(protocol);
         sender.setHost(host);
         sender.setPort(port);
         sender.setUsername(username);
         sender.setPassword(password);
 
         Properties props = sender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.trust", host);
-        props.put("mail.smtp.socketFactory.class", "com.sun.mail.util.MailSSLSocketFactory");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
 //        props.put("mail.debug", "true");
 

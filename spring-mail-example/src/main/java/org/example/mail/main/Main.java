@@ -6,16 +6,16 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 
 public class Main {
     public static void main(String[] args) {
         try (GenericApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class)) {
             JavaUtilLoggingSetup.setup();
 
-            Environment environment = context.getEnvironment();
-            JavaMailSenderImpl sender = context.getBean(JavaMailSenderImpl.class);
+            JavaMailSender sender = context.getBean(JavaMailSender.class);
 
+            Environment environment = context.getEnvironment();
             String from = environment.getRequiredProperty("mail.from");
             String to = environment.getRequiredProperty("mail.to");
 
